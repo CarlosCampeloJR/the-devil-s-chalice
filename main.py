@@ -4,42 +4,53 @@ import pyxel
 # Aumentei a lista para que o jogo tenha mais possibilidades
 # Formato: (x, y, largura, altura, cor, nome_do_ingrediente)
 BOTTLES = [
-    (20, 40, 15, 50, 8, "Vodka"),
-    (40, 40, 15, 50, 10, "Suco Laranja"),
-    (60, 40, 15, 50, 12, "Suco Cranberry"),
-    (80, 40, 15, 50, 9, "Rum"),
-    (100, 40, 15, 50, 2, "Licor Azul"),
-    (120, 40, 15, 50, 14, "Tequila"),
-    (140, 40, 15, 50, 11, "Licor de Cafe"),
+    (20, 40, 15, 50, 6, "Cachaca"),      # Cor Amarela/Dourada
+    (40, 40, 15, 50, 8, "Vodka"),
+    (60, 40, 15, 50, 7, "Leite Condensado"), # Branco
+    (80, 40, 15, 50, 10, "Suco de Maracuja"), # Laranja
+    (100, 40, 15, 50, 9, "Suco de Limao"),   # Verde Claro
+    (120, 40, 15, 50, 3, "Groselha"),       # Vermelho Escuro
+    (140, 40, 15, 50, 5, "Rum"),            # Marrom
 ]
 
 # Formato: { "name": "Nome do Drink", "ingredients": {"Ingrediente": quantidade}, "feedback": "Texto de sucesso" }
 RECIPES = [
-    {
-        "name": "Screwdriver",
-        "ingredients": {"Vodka": 2, "Suco Laranja": 4},
-        "feedback": "Um Screwdriver clássico! Perfeito!"
+   {
+        "name": "Caipirinha",
+        "ingredients": {"Cachaca": 3, "Suco de Limao": 2},
+        "feedback": "A caipirinha perfeita! O orgulho nacional!"
     },
     {
-        "name": "Cosmopolitan",
-        "ingredients": {"Vodka": 2, "Suco Cranberry": 2},
-        "feedback": "Elegante e delicioso. Um Cosmo!"
+        "name": "Batida de Maracuja",
+        "ingredients": {"Cachaca": 2, "Leite Condensado": 2, "Suco de Maracuja": 3},
+        "feedback": "Que delicia! Uma classica batida de maracuja."
     },
     {
-        "name": "Black Russian",
-        "ingredients": {"Vodka": 3, "Licor de Cafe": 2},
-        "feedback": "Um Black Russian forte e saboroso."
+        "name": "Rabo de Galo",
+        "ingredients": {"Cachaca": 4, "Groselha": 1}, # Simplificado
+        "feedback": "Um Rabo de Galo forte e direto ao ponto. Otimo!"
     },
     {
-        "name": "Sea Breeze",
-        "ingredients": {"Vodka": 2, "Suco Cranberry": 3, "Suco Laranja": 1},
-        "feedback": "Refrescante! Um ótimo Sea Breeze!"
+        "name": "Caipiroska",
+        "ingredients": {"Vodka": 3, "Suco de Limao": 2},
+        "feedback": "Uma Caipiroska de respeito! Muito bem."
     }
 ]
 
+# --- Mapeamento de cores dos ingredientes para a coqueteleira ---
+INGREDIENT_COLORS = {
+    "Cachaca": 6,          # Amarelo
+    "Vodka": 1,            # Azul Escuro 
+    "Leite Condensado": 7, # Branco 
+    "Suco de Maracuja": 10,# Laranja
+    "Suco de Limao": 9,    # Verde Claro
+    "Groselha": 3,         # Vermelho Escuro
+    "Rum": 5,              # Marrom
+}
+
 class BartenderGame:
     def __init__(self):
-        pyxel.init(256, 180, title="Protótipo Bartender", fps=60)
+        pyxel.init(256, 180, title="The Devil's Chalice", fps=60)
         
         self.reset_drink() # Inicia o jogo com tudo zerado
         pyxel.mouse(True) # Mostra o cursor do mouse
@@ -92,7 +103,7 @@ class BartenderGame:
             return
 
         best_score = 0
-        best_feedback = "Que mistura bizarra... Tente de novo."
+        best_feedback = "Que mistura horrivel... Tente de novo."
 
         # Itera sobre cada receita para encontrar a melhor correspondência
         for recipe in RECIPES:
@@ -131,7 +142,7 @@ class BartenderGame:
         elif self.score > 10:
              self.feedback_text = "Chegou perto de algo... mas não sei o que."
         else:
-             self.feedback_text = "Isso é... bebível? Acho que não."
+             self.feedback_text = "Dá pra beber? Hm… tenho minhas dúvidas."
              
     def reset_drink(self):
         """Reseta o estado do jogo para começar uma nova bebida."""
@@ -214,7 +225,7 @@ class BartenderGame:
         # Triângulo do balão de fala apontando para o bartender
         pyxel.tri(bubble_x + text_width, bubble_y, bubble_x + text_width + 10, bubble_y+5, 230, 125, 7)
         
-        pyxel.text(80, 170, "Clique para fazer outro drink", 5)
+        pyxel.text(80, 170, "Clique para fazer outro drink", 7)
 
 # --- Inicia o jogo ---
 BartenderGame()
